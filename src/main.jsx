@@ -499,7 +499,7 @@ function AboutPage({ navigate }) {
       <section className="bg-white py-20">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 sm:px-8 md:flex-row md:items-center lg:px-10">
           <p className="max-w-2xl text-xl font-semibold leading-8 text-castor-ink">
-            We help teams adopt AI with practical training, then build software only where it removes real manual work.
+            We help teams adopt AI with practical training and build software only where it removes real manual work.
           </p>
           <LinkButton href="/contact" navigate={navigate} variant="dark">
             Start a Conversation
@@ -540,7 +540,7 @@ function ContactPage({ search = '' }) {
             Contact
           </p>
           <h1 className="max-w-3xl text-5xl font-black leading-[1] tracking-tight text-castor-ink sm:text-6xl lg:text-7xl">
-            Let's talk about your goals
+            Tell us what you need.
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-8 text-neutral-600 sm:text-xl">
             Tell us what you are looking to improve, automate, or train your team on. We will review your message and respond within 24 hours.
