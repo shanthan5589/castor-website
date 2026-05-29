@@ -12,7 +12,9 @@ const services = [
   {
     title: 'AI Workforce Training',
     icon: 'grid',
-    body: 'We conduct structured AI training sessions for your employees — teaching them how to use modern AI tools to get more done in less time. Available as on-site workshops or remote webinars.'
+    body: 'We conduct structured AI training sessions for your employees — teaching them how to use modern AI tools to get more done in less time. Available as on-site workshops or remote webinars.',
+    cta: 'Book AI Training',
+    href: '/contact?interest=ai-training'
   },
   {
     title: 'Software & Automation Solutions',
@@ -40,34 +42,50 @@ const workSteps = [
 ];
 
 function useRoute() {
-  const [path, setPath] = useState(window.location.pathname);
+  const getLocation = () => ({
+    path: window.location.pathname,
+    search: window.location.search
+  });
+  const [location, setLocation] = useState(getLocation);
 
   useEffect(() => {
-    const syncPath = () => setPath(window.location.pathname);
-    window.addEventListener('popstate', syncPath);
-    return () => window.removeEventListener('popstate', syncPath);
+    const syncLocation = () => setLocation(getLocation());
+    window.addEventListener('popstate', syncLocation);
+    return () => window.removeEventListener('popstate', syncLocation);
   }, []);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.path, location.search]);
+
   const navigate = (href) => {
-    if (href === window.location.pathname) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const nextUrl = new URL(href, window.location.origin);
+    const nextPath = `${nextUrl.pathname}${nextUrl.search}`;
+    const currentPath = `${window.location.pathname}${window.location.search}`;
+
+    if (nextPath === currentPath) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       return;
     }
-    window.history.pushState({}, '', href);
-    setPath(href);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    window.history.pushState({}, '', nextPath);
+    setLocation({ path: nextUrl.pathname, search: nextUrl.search });
   };
 
-  return { path, navigate };
+  return { path: location.path, search: location.search, navigate };
 }
 
 function App() {
-  const { path, navigate } = useRoute();
+  const { path, search, navigate } = useRoute();
   const page = useMemo(() => {
     if (path === '/about') return <AboutPage navigate={navigate} />;
-    if (path === '/contact') return <ContactPage />;
+    if (path === '/contact') return <ContactPage search={search} />;
     return <HomePage navigate={navigate} />;
-  }, [path, navigate]);
+  }, [path, search, navigate]);
 
   return (
     <div className="min-h-screen bg-white text-castor-ink">
@@ -78,7 +96,7 @@ function App() {
   );
 }
 
-function LinkButton({ href, navigate, children, variant = 'primary', className = '' }) {
+function LinkButton({ href, navigate, children, variant = 'primary', className = '', onNavigate }) {
   const styles =
     variant === 'dark'
       ? 'bg-castor-ink text-white hover:bg-castor-navy'
@@ -87,7 +105,10 @@ function LinkButton({ href, navigate, children, variant = 'primary', className =
   return (
     <button
       type="button"
-      onClick={() => navigate(href)}
+      onClick={() => {
+        onNavigate?.();
+        navigate(href);
+      }}
       className={`inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-castor-blue/20 ${styles} ${className}`}
     >
       {children}
@@ -102,8 +123,8 @@ function NavAnchor({ item, path, navigate, onClick }) {
     <button
       type="button"
       onClick={() => {
-        navigate(item.href);
         onClick?.();
+        navigate(item.href);
       }}
       className={`text-sm font-medium transition hover:text-castor-blue ${
         active ? 'text-castor-ink' : 'text-neutral-500'
@@ -149,7 +170,7 @@ function Navbar({ path, navigate }) {
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-castor-line md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-castor-line bg-white shadow-sm md:hidden"
           aria-label="Toggle navigation"
           aria-expanded={open}
         >
@@ -185,7 +206,7 @@ function Navbar({ path, navigate }) {
                 onClick={() => setOpen(false)}
               />
             ))}
-            <LinkButton href="/contact" navigate={navigate} className="w-full">
+            <LinkButton href="/contact" navigate={navigate} className="w-full" onNavigate={() => setOpen(false)}>
               Get In Touch
             </LinkButton>
           </div>
@@ -228,7 +249,7 @@ function HomePage({ navigate }) {
   return (
     <>
       <Hero navigate={navigate} />
-      <ServicesSection />
+      <ServicesSection navigate={navigate} />
       <HowWeWork />
       <CtaBanner navigate={navigate} />
     </>
@@ -251,7 +272,7 @@ function Hero({ navigate }) {
             AI CONSULTANCY & TECHNOLOGY SERVICES
           </p>
           <h1 className="max-w-full text-4xl font-black leading-[0.96] tracking-tight text-white sm:max-w-5xl sm:text-6xl lg:text-7xl">
-            AI Training and Custom Software for organizations
+            AI Training and Custom Software for businesses
           </h1>
           <p className="mt-8 max-w-full text-lg leading-8 text-white/72 sm:max-w-2xl sm:text-xl">
             We train your workforce to use modern AI tools effectively, and build custom software that automates the manual processes slowing your operations down.
@@ -277,7 +298,7 @@ function Hero({ navigate }) {
   );
 }
 
-function ServicesSection() {
+function ServicesSection({ navigate }) {
   return (
     <section className="bg-white py-24 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
@@ -295,7 +316,7 @@ function ServicesSection() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-5 sm:grid-cols-2">
           {services.map((service) => (
             <article
               key={service.title}
@@ -306,6 +327,15 @@ function ServicesSection() {
                 {service.title}
               </h3>
               <p className="mt-5 whitespace-pre-line text-base leading-7 text-neutral-600">{service.body}</p>
+              {service.cta && (
+                <button
+                  type="button"
+                  onClick={() => navigate(service.href)}
+                  className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full bg-castor-ink px-5 text-sm font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-castor-navy focus:outline-none focus:ring-4 focus:ring-castor-blue/20"
+                >
+                  {service.cta}
+                </button>
+              )}
             </article>
           ))}
         </div>
@@ -437,13 +467,13 @@ function AboutPage({ navigate }) {
               About Castor
             </p>
             <h1 className="max-w-5xl text-5xl font-black leading-[1] tracking-tight text-castor-ink sm:text-6xl lg:text-7xl">
-              Practical AI solutions for real operational problems
+              Helping teams make practical use of AI
             </h1>
             <p className="mt-8 max-w-3xl text-lg leading-8 text-neutral-600 sm:text-xl">
-              Castor is a technology services company that works directly with organizations to understand their operations and deliver solutions that make a measurable difference. We combine AI expertise with hands-on problem solving to build tools and training programmes that your team will actually use.
+              Castor is an AI consultancy that helps organisations make practical use of modern AI. We offer structured AI training sessions for employees - teaching your team the tools and techniques that make their daily work faster and more effective.
             </p>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-600 sm:text-xl">
-              We do not offer generic software packages or off-the-shelf training. Every engagement starts with understanding your specific workflow — and ends with a solution built around it.
+              Beyond training, we build custom software that automates the manual processes in your business - from inventory tracking and document management to automated reporting and workflow automation.
             </p>
           </div>
           <div className="relative min-h-80" aria-hidden="true">
@@ -480,8 +510,27 @@ function AboutPage({ navigate }) {
   );
 }
 
-function ContactPage() {
+function ContactPage({ search = '' }) {
   const [submitted, setSubmitted] = useState(false);
+  const [interest, setInterest] = useState(() => {
+    const requestedInterest = new URLSearchParams(search).get('interest');
+    return requestedInterest === 'ai-training' ? 'AI Training' : 'General Inquiry';
+  });
+
+  useEffect(() => {
+    const requestedInterest = new URLSearchParams(search).get('interest');
+    if (requestedInterest === 'ai-training') {
+      setInterest('AI Training');
+    }
+  }, [search]);
+
+  const showTrainingFields = interest === 'AI Training' || interest === 'Both';
+  const messageLabel =
+    interest === 'AI Training'
+      ? 'What should your team be able to do after the training?'
+      : interest === 'Both'
+        ? 'Tell Us About Your Training and Automation Needs'
+        : 'Tell Us About Your Inquiry';
 
   return (
     <section className="bg-white py-24 sm:py-28 lg:py-32">
@@ -491,10 +540,10 @@ function ContactPage() {
             Contact
           </p>
           <h1 className="max-w-3xl text-5xl font-black leading-[1] tracking-tight text-castor-ink sm:text-6xl lg:text-7xl">
-            Let's talk about your problem
+            Let's talk about your goals
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-8 text-neutral-600 sm:text-xl">
-            Describe what is slowing your operations down. We will review your message and respond within 24 hours.
+            Tell us what you are looking to improve, automate, or train your team on. We will review your message and respond within 24 hours.
           </p>
           <div className="mt-12 border-l-2 border-castor-blue pl-6">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Email</p>
@@ -522,8 +571,99 @@ function ContactPage() {
             <Field label="Email Address" name="email" type="email" autoComplete="email" />
           </div>
           <div className="mt-6">
+            <label htmlFor="interest" className="text-sm font-semibold text-castor-ink">
+              What are you interested in?
+            </label>
+            <select
+              id="interest"
+              name="interest"
+              value={interest}
+              onChange={(event) => setInterest(event.target.value)}
+              className="mt-3 h-12 w-full rounded-lg border border-castor-line bg-white px-4 text-base outline-none transition focus:border-castor-blue focus:ring-4 focus:ring-castor-blue/10"
+              required
+            >
+              <option>AI Training</option>
+              <option>Software & Automation</option>
+              <option>Both</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+          {showTrainingFields && (
+            <>
+              <div className="mt-6">
+                <label htmlFor="training-type" className="text-sm font-semibold text-castor-ink">
+                  What type of training are you looking for?
+                </label>
+                <select
+                  id="training-type"
+                  name="training-type"
+                  className="mt-3 h-12 w-full rounded-lg border border-castor-line bg-white px-4 text-base outline-none transition focus:border-castor-blue focus:ring-4 focus:ring-castor-blue/10"
+                  required
+                >
+                  <option>Introductory AI Training</option>
+                  <option>Role-Specific AI Training</option>
+                  <option>AI Tools for Productivity</option>
+                  <option>AI Safety and Responsible Use</option>
+                  <option>Not Sure Yet</option>
+                </select>
+              </div>
+              <div className="mt-6">
+                <label htmlFor="training-audience" className="text-sm font-semibold text-castor-ink">
+                  Who is the training for?
+                </label>
+                <select
+                  id="training-audience"
+                  name="training-audience"
+                  className="mt-3 h-12 w-full rounded-lg border border-castor-line bg-white px-4 text-base outline-none transition focus:border-castor-blue focus:ring-4 focus:ring-castor-blue/10"
+                  required
+                >
+                  <option>Leadership / Management</option>
+                  <option>Operations Team</option>
+                  <option>Sales / Marketing</option>
+                  <option>Admin / Documentation Team</option>
+                  <option>Mixed Team</option>
+                </select>
+              </div>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="experience-level" className="text-sm font-semibold text-castor-ink">
+                    Current AI Experience Level
+                  </label>
+                  <select
+                    id="experience-level"
+                    name="experience-level"
+                    className="mt-3 h-12 w-full rounded-lg border border-castor-line bg-white px-4 text-base outline-none transition focus:border-castor-blue focus:ring-4 focus:ring-castor-blue/10"
+                    required
+                  >
+                    <option>New to AI</option>
+                    <option>Some Employees Use AI Tools</option>
+                    <option>Already Using AI Regularly</option>
+                    <option>Not Sure</option>
+                  </select>
+                </div>
+                <Field label="Approx. Number of Participants" name="participants" autoComplete="off" />
+              </div>
+              <div className="mt-6">
+                <label htmlFor="training-format" className="text-sm font-semibold text-castor-ink">
+                  Preferred Training Format
+                </label>
+                <select
+                  id="training-format"
+                  name="training-format"
+                  className="mt-3 h-12 w-full rounded-lg border border-castor-line bg-white px-4 text-base outline-none transition focus:border-castor-blue focus:ring-4 focus:ring-castor-blue/10"
+                  required
+                >
+                  <option>On-site Workshop</option>
+                  <option>Remote Webinar</option>
+                  <option>Hybrid</option>
+                  <option>Not Sure Yet</option>
+                </select>
+              </div>
+            </>
+          )}
+          <div className="mt-6">
             <label htmlFor="problem" className="text-sm font-semibold text-castor-ink">
-              Describe Your Problem
+              {messageLabel}
             </label>
             <textarea
               id="problem"
@@ -541,7 +681,7 @@ function ContactPage() {
           </button>
           {submitted && (
             <p className="mt-5 text-sm font-semibold text-castor-navy">
-              Thanks. We will review your note and respond within 24 hours.
+              Thanks. We will review your {interest.toLowerCase()} request and respond within 24 hours.
             </p>
           )}
         </form>
@@ -583,7 +723,7 @@ function Footer({ navigate }) {
               <span>Castor</span>
             </button>
             <p className="mt-4 max-w-md text-base leading-7 text-white/62">
-              Built for organizations. Delivered with precision.
+              Built for businesses that mean it.
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
@@ -603,7 +743,7 @@ function Footer({ navigate }) {
           <a href="mailto:hello@castor.example" className="transition hover:text-white">
             hello@castor.example
           </a>
-          <p>Castor. Custom software automation for organizations.</p>
+          <p>Castor. AI Training and Custom Software for Businesses.</p>
         </div>
       </div>
     </footer>
