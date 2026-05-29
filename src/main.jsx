@@ -473,7 +473,7 @@ function AboutPage({ navigate }) {
               Castor is an AI consultancy that helps organisations make practical use of modern AI. We offer structured AI training sessions for employees - teaching your team the tools and techniques that make their daily work faster and more effective.
             </p>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-600 sm:text-xl">
-              Beyond training, we build custom software that automates the manual processes in your business - from inventory tracking and document management to automated reporting and workflow automation.
+              Beyond training, we build custom software that replaces the manual work in your business - designed around your specific processes and built to actually fit the way your team works.
             </p>
           </div>
           <div className="relative min-h-80" aria-hidden="true">
