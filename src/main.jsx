@@ -499,7 +499,7 @@ function AboutPage({ navigate }) {
       <section className="bg-white py-20">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 sm:px-8 md:flex-row md:items-center lg:px-10">
           <p className="max-w-2xl text-xl font-semibold leading-8 text-castor-ink">
-            We work close to the floor, understand the process first, and build around the way your business actually runs.
+            We help teams adopt AI with practical training, then build software only where it removes real manual work.
           </p>
           <LinkButton href="/contact" navigate={navigate} variant="dark">
             Start a Conversation
