@@ -911,7 +911,7 @@ function HowWeWork() {
 
 function WhyCastor() {
   return (
-    <RevealSection className="py-24 sm:py-32" style={{ background: 'var(--c-fog)' }}>
+    <RevealSection className="py-24 sm:py-32" style={{ background: '#fff' }}>
       <div className="section-motion mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="text-center mb-14">
           <Eyebrow>Why Castor</Eyebrow>
