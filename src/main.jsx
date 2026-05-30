@@ -510,7 +510,6 @@ function HomePage({ navigate }) {
       <Hero navigate={navigate} />
       <ServicesSection navigate={navigate} compact />
       <WhyCastor />
-      <VisualShowcase />
       <FaqSection />
       <CtaBanner navigate={navigate} />
     </>
@@ -967,15 +966,15 @@ function VisualShowcase() {
             </h2>
           </div>
           <p className="max-w-xs text-sm leading-7" style={{ color: '#5a6070' }}>
-            From training rooms to production floors.
+            Training sessions, software builds, and everything in between.
           </p>
         </div>
 
         {/* Mobile: vertical stack */}
         <div className="flex flex-col gap-3 sm:hidden">
-          <ShowcaseImage src={images.operations} alt="Operations environment" style={{ height: 220 }} />
-          <ShowcaseImage src={images.workshop} alt="Workshop training session" style={{ height: 180 }} />
-          <ShowcaseImage src={images.dashboard} alt="Software dashboard" style={{ height: 180 }} />
+          <ShowcaseImage src={images.training} alt="AI training workshop session" style={{ height: 220 }} />
+          <ShowcaseImage src={images.dashboard} alt="Custom software dashboard" style={{ height: 180 }} />
+          <ShowcaseImage src="/images/hero-team.jpg" alt="Team working on software together" style={{ height: 180 }} />
         </div>
 
         {/* Desktop: explicit bento grid — no Tailwind row/col classes that can conflict */}
@@ -988,18 +987,18 @@ function VisualShowcase() {
           }}
         >
           <ShowcaseImage
-            src={images.operations}
-            alt="Operations and manufacturing environment"
+            src={images.training}
+            alt="AI training workshop session"
             style={{ gridColumn: '1', gridRow: '1 / 3', height: '100%' }}
           />
           <ShowcaseImage
-            src={images.workshop}
-            alt="Workshop training session"
+            src="/images/hero-team.jpg"
+            alt="Team working on software together"
             style={{ gridColumn: '2', gridRow: '1', height: '100%' }}
           />
           <ShowcaseImage
             src={images.dashboard}
-            alt="Software dashboard"
+            alt="Custom software dashboard"
             style={{ gridColumn: '2', gridRow: '2', height: '100%' }}
           />
         </div>
