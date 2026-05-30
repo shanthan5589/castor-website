@@ -508,8 +508,13 @@ function HomePage({ navigate }) {
   return (
     <>
       <Hero navigate={navigate} />
+      <TickerStrip />
+      <StatsSection />
+      <ProblemsSection />
       <ServicesSection navigate={navigate} compact />
+      <HowWeWork />
       <WhyCastor />
+      <OutcomesSection navigate={navigate} />
       <FaqSection />
       <CtaBanner navigate={navigate} />
     </>
@@ -911,7 +916,7 @@ function HowWeWork() {
 
 function WhyCastor() {
   return (
-    <RevealSection className="py-24 sm:py-32" style={{ background: '#fff' }}>
+    <RevealSection className="py-24 sm:py-32" style={{ background: 'var(--c-fog)' }}>
       <div className="section-motion mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="text-center mb-14">
           <Eyebrow>Why Castor</Eyebrow>
@@ -1077,7 +1082,7 @@ function IndustriesSection() {
 
 function OutcomesSection({ navigate }) {
   return (
-    <RevealSection className="py-24 sm:py-32" style={{ background: 'var(--c-fog)' }}>
+    <RevealSection className="py-24 sm:py-32" style={{ background: '#fff' }}>
       <div className="section-motion mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="mb-14 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
