@@ -1164,7 +1164,7 @@ function FaqSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <RevealSection className="py-24 sm:py-32" style={{ background: 'var(--c-fog)' }}>
+    <RevealSection className="py-24 sm:py-32" style={{ background: '#fff' }}>
       <div className="section-motion mx-auto max-w-2xl px-5 sm:px-8">
         <div className="text-center mb-12">
           <Eyebrow>FAQ</Eyebrow>
