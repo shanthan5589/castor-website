@@ -1673,13 +1673,13 @@ function Footer({ navigate }) {
           {/* Contact */}
           <div className="flex flex-col gap-3">
             <a
-              href="mailto:hello@castor.in"
+              href="mailto:support@castorai.in"
               className="text-sm transition-colors"
               style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
               onMouseOver={e => e.currentTarget.style.color = '#fff'}
               onMouseOut={e => e.currentTarget.style.color = 'rgba(255,255,255,0.55)'}
             >
-              hello@castor.in
+              support@castorai.in
             </a>
             <button
               type="button"
