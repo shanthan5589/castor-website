@@ -1430,8 +1430,9 @@ function ContactPage({ search = '' }) {
                 Our Location
               </p>
               <p className="text-sm font-semibold" style={{ color: 'var(--c-ink)', fontFamily: 'var(--font-display)' }}>Castor</p>
-              <p className="text-sm mt-1" style={{ color: '#6a7280' }}>HITEC City, Hyderabad</p>
-              <p className="text-sm" style={{ color: '#6a7280' }}>Telangana 500081, India</p>
+              <p className="text-sm mt-1" style={{ color: '#6a7280' }}>Block 8, 1405 Narsingi</p>
+              <p className="text-sm" style={{ color: '#6a7280' }}>Hyderabad 500075</p>
+              <p className="text-sm" style={{ color: '#6a7280' }}>Telangana, India</p>
               <p className="text-sm mt-3" style={{ color: '#6a7280' }}>support@castorai.in</p>
             </div>
           </div>
