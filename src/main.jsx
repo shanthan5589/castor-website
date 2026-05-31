@@ -221,7 +221,7 @@ function interestFromSearch(search) {
   const param = new URLSearchParams(search).get('interest');
   if (param === 'ai-training') return 'AI Workforce Training';
   if (param === 'software') return 'Software & Automation';
-  return 'Not Sure Yet';
+  return 'AI Workforce Training';
 }
 
 function useRoute() {
@@ -1338,6 +1338,8 @@ function AboutPage({ navigate }) {
           </div>
         </div>
       </RevealSection>
+
+      <CtaBanner navigate={navigate} />
     </>
   );
 }
@@ -1530,16 +1532,16 @@ function ContactPage({ search = '' }) {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <FormSelect label="Do you have existing software?" id="existing-systems" name="existing-systems" required>
-                    <option>Yes — and it needs to connect</option>
-                    <option>Yes — but we can replace it</option>
-                    <option>No — starting fresh</option>
+                    <option>Yes — needs to integrate with existing systems</option>
+                    <option>Yes — open to replacing it</option>
+                    <option>No — building from scratch</option>
                     <option>Not Sure</option>
                   </FormSelect>
                   <FormSelect label="What is your rough timeline?" id="timeline" name="timeline" required>
                     <option>As soon as possible</option>
                     <option>Within 1–3 months</option>
                     <option>3–6 months</option>
-                    <option>Just exploring for now</option>
+                    <option>Evaluating options</option>
                   </FormSelect>
                 </div>
               </div>
@@ -1566,6 +1568,18 @@ function ContactPage({ search = '' }) {
                 We respond within 24 hours. No spam, no hard sell.
               </p>
             </div>
+
+            <div className="mt-6 flex items-center gap-3">
+              <div style={{ flex: 1, height: 1, background: 'var(--c-line)' }} />
+              <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#6b7280', fontFamily: 'var(--font-body)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>or</span>
+              <div style={{ flex: 1, height: 1, background: 'var(--c-line)' }} />
+            </div>
+            <p className="mt-3 text-center" style={{ fontSize: '0.95rem', color: '#374151' }}>
+              Email us directly:{' '}
+              <a href="mailto:support@castorai.in" style={{ color: 'var(--c-blue)', textDecoration: 'underline' }}>
+                support@castorai.in
+              </a>
+            </p>
 
             {status === 'success' && (
               <div className="mt-6 rounded-xl p-4" style={{ background: 'rgba(0,212,170,0.07)', border: '1px solid rgba(0,212,170,0.25)' }} role="status">
