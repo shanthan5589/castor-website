@@ -1227,13 +1227,19 @@ function CtaBanner({ navigate }) {
       <div className="hero-glow-1" aria-hidden="true" />
       <div className="section-motion relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="max-w-2xl">
-            <Eyebrow light>Start here</Eyebrow>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 3.25rem)', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-              Ready to see what's<br />possible for your team?
-            </h2>
-            <p className="mt-5 text-lg leading-8" style={{ color: 'rgba(255,255,255,0.58)' }}>
-              Tell us what you need — AI training for your team or custom software for your operations. Fill in a short form and we will get back to you within 24 hours.
-            </p>
+          <Eyebrow light>Start here</Eyebrow>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 3.25rem)', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+            Ready to see what's<br />possible for your team?
+          </h2>
+          <p className="mt-5 text-lg leading-8" style={{ color: 'rgba(255,255,255,0.58)' }}>
+            Tell us what you need — AI training for your team or custom software for your operations. Fill in a short form and we will get back to you within 24 hours.
+          </p>
+          <div className="mt-8">
+            <button type="button" onClick={() => navigate('/contact')} className="btn-primary">
+              Get in Touch
+              <ArrowRight size={15} />
+            </button>
+          </div>
         </div>
       </div>
     </RevealSection>
@@ -1417,9 +1423,15 @@ function ContactPage({ search = '' }) {
               </ol>
             </div>
 
-            <p className="text-sm px-1" style={{ color: '#9ca3af' }}>
-              Based in Hyderabad · Serving teams across India
-            </p>
+            <div className="rounded-2xl p-7" style={{ background: 'var(--c-fog)', border: '1.5px solid var(--c-line)' }}>
+              <p className="text-xs font-semibold uppercase mb-4" style={{ letterSpacing: '0.18em', color: 'var(--c-blue)', fontFamily: 'var(--font-body)' }}>
+                Our Location
+              </p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--c-ink)', fontFamily: 'var(--font-display)' }}>Castor</p>
+              <p className="text-sm mt-1" style={{ color: '#6a7280' }}>HITEC City, Hyderabad</p>
+              <p className="text-sm" style={{ color: '#6a7280' }}>Telangana 500081, India</p>
+              <p className="text-sm mt-3" style={{ color: '#6a7280' }}>support@castorai.in</p>
+            </div>
           </div>
 
           {/* Right: form */}
@@ -1558,7 +1570,7 @@ function ContactPage({ search = '' }) {
             {status === 'success' && (
               <div className="mt-6 rounded-xl p-4" style={{ background: 'rgba(0,212,170,0.07)', border: '1px solid rgba(0,212,170,0.25)' }} role="status">
                 <p className="text-sm font-semibold" style={{ color: 'var(--c-teal)' }}>Message received.</p>
-                <p className="text-sm mt-1" style={{ color: '#5a6070' }}>We will review your details and reply within 24 hours to arrange a call.</p>
+                <p className="text-sm mt-1" style={{ color: '#5a6070' }}>We will review your details and get back to you within 24 hours.</p>
               </div>
             )}
             {status === 'error' && (
