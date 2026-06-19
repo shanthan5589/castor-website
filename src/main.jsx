@@ -278,12 +278,12 @@ function App() {
 
   useEffect(() => {
     const titles = {
-      '/': 'Castor',
-      '/services': 'Services – Castor',
-      '/about': 'About – Castor',
-      '/contact': 'Contact – Castor',
+      '/': 'Castor AI',
+      '/services': 'Services – Castor AI',
+      '/about': 'About – Castor AI',
+      '/contact': 'Contact – Castor AI',
     };
-    document.title = titles[path] || 'Castor – AI Training & Custom Software';
+    document.title = titles[path] || 'Castor AI – AI Training & Custom Software';
   }, [path]);
 
   useEffect(() => {
@@ -361,26 +361,36 @@ function Eyebrow({ children, light = false }) {
   );
 }
 
-function LogoMark({ inverse = false, size = 40 }) {
+function LogoMark({ inverse = false, size = 24 }) {
+  const lineStrong = inverse ? 'rgba(255,255,255,0.85)' : '#111';
+  const lineFaint  = inverse ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.25)';
+  const nodeStroke = inverse ? 'rgba(255,255,255,0.9)' : '#111';
+  const nodeFill   = inverse ? 'transparent' : '#fff';
   return (
-    <span
-      className="grid place-items-center rounded-full"
-      style={{
-        width: size, height: size,
-        background: inverse ? 'rgba(255,255,255,0.1)' : '#fff',
-        border: inverse ? '1px solid rgba(255,255,255,0.15)' : '1px solid var(--c-line)',
-        boxShadow: '0 8px 24px rgba(10,37,64,0.12)',
-        flexShrink: 0
-      }}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 40 40" width={size} height={size} fill="none">
-        <circle cx="20" cy="20" r="20" fill={inverse ? 'transparent' : 'white'} />
-        <path d="M12 20h4.4M20 12v4.4M20 23.6V28" stroke="#246BFE" strokeWidth="3.2" strokeLinecap="round" />
-        <circle cx="27" cy="20" r="3.1" fill="#246BFE" />
-        <circle cx="27" cy="20" r="1.2" fill="#00D4AA" />
-      </svg>
-    </span>
+    <svg viewBox="4 4 32 32" width={size} height={size} fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      {/* faint cross connections */}
+      <line x1="8.75" y1="11.9" x2="20"    y2="32.5" stroke={lineFaint} strokeWidth="0.6"/>
+      <line x1="8.75" y1="28.1" x2="20"    y2="7.5"  stroke={lineFaint} strokeWidth="0.6"/>
+      <line x1="20"   y1="7.5"  x2="31.25" y2="28.1" stroke={lineFaint} strokeWidth="0.6"/>
+      <line x1="20"   y1="32.5" x2="31.25" y2="11.9" stroke={lineFaint} strokeWidth="0.6"/>
+      {/* strong connections */}
+      <line x1="8.75" y1="11.9" x2="20"    y2="7.5"  stroke={lineStrong} strokeWidth="1.1"/>
+      <line x1="8.75" y1="11.9" x2="20"    y2="20"   stroke={lineStrong} strokeWidth="1.1"/>
+      <line x1="8.75" y1="28.1" x2="20"    y2="20"   stroke={lineStrong} strokeWidth="1.1"/>
+      <line x1="8.75" y1="28.1" x2="20"    y2="32.5" stroke={lineStrong} strokeWidth="1.1"/>
+      <line x1="20"   y1="7.5"  x2="31.25" y2="11.9" stroke={lineStrong} strokeWidth="1.1"/>
+      <line x1="20"   y1="20"   x2="31.25" y2="11.9" stroke={lineStrong} strokeWidth="1.1"/>
+      <line x1="20"   y1="20"   x2="31.25" y2="28.1" stroke={lineStrong} strokeWidth="1.1"/>
+      <line x1="20"   y1="32.5" x2="31.25" y2="28.1" stroke={lineStrong} strokeWidth="1.1"/>
+      {/* nodes */}
+      <circle cx="8.75"  cy="11.9" r="2.8" fill={nodeFill} stroke={nodeStroke} strokeWidth="1.1"/>
+      <circle cx="8.75"  cy="28.1" r="2.8" fill={nodeFill} stroke={nodeStroke} strokeWidth="1.1"/>
+      <circle cx="20"    cy="7.5"  r="2.8" fill={nodeFill} stroke={nodeStroke} strokeWidth="1.1"/>
+      <circle cx="20"    cy="20"   r="2.8" fill={nodeFill} stroke={nodeStroke} strokeWidth="1.1"/>
+      <circle cx="20"    cy="32.5" r="2.8" fill={nodeFill} stroke={nodeStroke} strokeWidth="1.1"/>
+      <circle cx="31.25" cy="11.9" r="2.8" fill={nodeFill} stroke={nodeStroke} strokeWidth="1.1"/>
+      <circle cx="31.25" cy="28.1" r="2.8" fill={nodeFill} stroke={nodeStroke} strokeWidth="1.1"/>
+    </svg>
   );
 }
 
@@ -420,11 +430,11 @@ function Navbar({ path, navigate }) {
           type="button"
           onClick={() => navigate('/')}
           className="flex items-center gap-3"
-          aria-label="Castor home"
+          aria-label="Castor AI home"
         >
           <LogoMark />
           <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.2rem', letterSpacing: '-0.02em' }}>
-            Castor
+            Castor AI
           </span>
         </button>
 
@@ -919,7 +929,7 @@ function WhyCastor() {
     <RevealSection className="py-24 sm:py-32" style={{ background: 'var(--c-fog)' }}>
       <div className="section-motion mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="text-center mb-14">
-          <Eyebrow>Why Castor</Eyebrow>
+          <Eyebrow>Why Castor AI</Eyebrow>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }}>
             What makes us different
           </h2>
@@ -1088,7 +1098,7 @@ function OutcomesSection({ navigate }) {
           <div>
             <Eyebrow>What changes</Eyebrow>
             <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', letterSpacing: '-0.03em' }}>
-              Before Castor → After
+              Before Castor AI → After
             </h2>
           </div>
           <button type="button" onClick={() => navigate('/contact')} className="btn-primary shrink-0">
@@ -1285,7 +1295,7 @@ function AboutPage({ navigate }) {
         <div className="hero-glow-1" />
         <div className="hero-glow-2" />
         <div className="section-motion relative z-10 mx-auto max-w-4xl px-5 py-24 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
-          <Eyebrow light>About Castor</Eyebrow>
+          <Eyebrow light>About Castor AI</Eyebrow>
           <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 5rem)', letterSpacing: '-0.03em', lineHeight: 1.05 }}>
             We are a Hyderabad-based<br />AI consultancy
           </h1>
@@ -1293,7 +1303,7 @@ function AboutPage({ navigate }) {
             Most businesses know AI is important — but their teams don't know what to use, when, or how to do it safely. And their day-to-day operations are still full of manual processes that eat into time and focus.
           </p>
           <p className="mt-5 max-w-3xl text-lg leading-8" style={{ color: 'rgba(255,255,255,0.62)' }}>
-            Castor was built to fix both of those things. We run structured AI training for employees and build custom software that automates the repetitive work — designed around how your specific business operates, not around a generic product.
+            Castor AI was built to fix both of those things. We run structured AI training for employees and build custom software that automates the repetitive work — designed around how your specific business operates, not around a generic product.
           </p>
         </div>
         <div className="absolute inset-x-0 bottom-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(36,107,254,0.7), transparent)' }} />
@@ -1429,7 +1439,7 @@ function ContactPage({ search = '' }) {
               <p className="text-xs font-semibold uppercase mb-4" style={{ letterSpacing: '0.18em', color: 'var(--c-blue)', fontFamily: 'var(--font-body)' }}>
                 Our Location
               </p>
-              <p className="text-sm font-semibold" style={{ color: 'var(--c-ink)', fontFamily: 'var(--font-display)' }}>Castor</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--c-ink)', fontFamily: 'var(--font-display)' }}>Castor AI</p>
               <p className="text-sm mt-1" style={{ color: '#6a7280' }}>Block 8, 1405 Narsingi,</p>
               <p className="text-sm" style={{ color: '#6a7280' }}>Hyderabad - 500075</p>
               <p className="text-sm" style={{ color: '#6a7280' }}>Telangana, India</p>
@@ -1443,7 +1453,7 @@ function ContactPage({ search = '' }) {
             style={{ border: '1.5px solid var(--c-line)', background: '#fff', boxShadow: '0 16px 56px rgba(10,37,64,0.07)' }}
             onSubmit={handleSubmit}
           >
-            <input type="hidden" name="_subject" value="New Castor enquiry" />
+            <input type="hidden" name="_subject" value="New Castor AI enquiry" />
 
             <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '1.5rem', color: 'var(--c-ink)' }}>
               About you
@@ -1676,7 +1686,7 @@ function Footer({ navigate }) {
           <button type="button" onClick={() => navigate('/')} className="flex items-center gap-3 self-start">
             <LogoMark inverse />
             <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.3rem', letterSpacing: '-0.02em' }}>
-              Castor
+              Castor AI
             </span>
           </button>
 
@@ -1722,7 +1732,7 @@ function Footer({ navigate }) {
         </div>
 
         <div className="mt-12 pt-6 text-sm" style={{ borderTop: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.3)' }}>
-          <p>© {new Date().getFullYear()} Castor · Hyderabad, India</p>
+          <p>© {new Date().getFullYear()} Castor AI · Hyderabad, India</p>
         </div>
       </div>
     </footer>
